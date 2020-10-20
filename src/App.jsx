@@ -14,6 +14,7 @@ class App extends React.Component {
 
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.addTodo = this.addTodo.bind(this);
+    this.updateTodo = this.updateTodo.bind(this);
   }
 
   handleButtonClick(buttonName) {
@@ -36,21 +37,32 @@ class App extends React.Component {
     })
     console.log(this.state.todos)
     // window.localStorage.setItem(this.state.todos[0].name, this.state.todos[0].status)
+  }
+
+  updateTodo(arr) {
+    this.setState({
+      todos: arr
+    })
 
   }
 
   componentDidMount() {
-    console.log('in the component did mount method')
+    // console.log('in the component did mount method')
     console.log("Number of todos: " + this.state.todos.length)
     let data = window.localStorage.getItem('to');
     //unstring this data and set it to todo status
-    console.log(data)
+    // console.log(JSON.parse(data))
+    if(data) {
+    this.setState({
+      todos: JSON.parse(data)
+    })
+  }
     // let savedTodo = window.localStorage.getItem('active')
     // console.log(savedTodo)
   }
 
   componentDidUpdate() {
-    console.log('in the component did update method')
+    // console.log('in the component did update method')
     console.log('Number of todos: ' + this.state.todos.length)
     // this.state.todos.map((item, index) => {
     //   window.localStorage.setItem(this.state.todos.index.name, this.state.todos.index.status)
@@ -64,16 +76,17 @@ class App extends React.Component {
 
     let tabChoice = <div />;
 
-    // if (this.state.buttonClicked === "all") {
+    if (this.state.buttonClicked === "all") {
       tabChoice = (
         <List
         placeholder = "What's next?"
         currList = {this.state.todos}
         addFunction = {this.addTodo}
+        updateTodo = {this.updateTodo}
         title = "All"
         />
       );
-    //}
+    }
 
     return(
       <div className="container">

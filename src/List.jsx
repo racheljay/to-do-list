@@ -31,10 +31,15 @@ class List extends React.Component {
     }
 
     changeStatus(index) {
-        if(this.props.currList[index].status === "active") {
-            this.props.currList[index].status = "completed"
+        let double = this.props.currList
+        if(double[index].status === "active") {
+            double[index].status = "completed"
             //console.log(index + " is active")
+        } else {
+            double[index].status = "active"
         }
+
+        this.props.updateTodo(double)
         // console.log(this.props.currList[index].status)
     
 
@@ -43,8 +48,12 @@ class List extends React.Component {
         //console.log(this.props.currList.map((item, index) => item.status))
     }
 
-    deleteItem() {
+    deleteItem(index) {
+        console.log(this.props.currList)
+        let double = this.props.currList
+        double.splice(index, 1)
 
+        this.props.updateTodo(double)
     }
 
 
