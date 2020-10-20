@@ -59,7 +59,8 @@ class List extends React.Component {
 
     render() {
         return (
-            <div className="col-6 mx-auto">
+            
+            <div className="col-12 mx-auto">
                 <p className="h2">{this.props.title}</p>
                 <form onSubmit={this.handleSubmit}>
                     <label>
@@ -73,6 +74,8 @@ class List extends React.Component {
                         <input className="btn btn-sm" type="submit" value="Submit" />
                     </label>
                 </form>
+
+
                 <ul>
                     {/* <div>{this.props.title}</div> */}
                     {this.props.currList.map((item, index) => (

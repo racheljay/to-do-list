@@ -5,16 +5,19 @@ import List from './List';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
-      buttonClicked: "",
+      buttonClicked: "all",
       todos: [],
+      completed: [],
+      active: []
     };
 
 
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.addTodo = this.addTodo.bind(this);
     this.updateTodo = this.updateTodo.bind(this);
+    // this.filterActive = this.filterActive.bind(this);
   }
 
   handleButtonClick(buttonName) {
@@ -22,18 +25,22 @@ class App extends React.Component {
       buttonClicked: buttonName
     });
     console.log(buttonName)
+    if (buttonName === 'active') {
+      this.filterActive()
+    }
+    if (buttonName === 'completed') {
+      this.filterComplete()
+    }
 
   }
 
   addTodo(name) {
-
     let obj = {
       name: name,
       status: "active",
     }
     this.setState({
       todos: this.state.todos.concat(obj)
-      
     })
     console.log(this.state.todos)
     // window.localStorage.setItem(this.state.todos[0].name, this.state.todos[0].status)
@@ -43,27 +50,40 @@ class App extends React.Component {
     this.setState({
       todos: arr
     })
+  }
+
+  filterActive() {
+    this.setState({
+      active: this.state.todos.filter(item => item.status === "active")
+    })
+    console.log(this.state.active)
 
   }
 
+  filterComplete() {
+    this.setState({
+      completed: this.state.todos.filter(item => item.status === "completed")
+    })
+    console.log(this.state.active)
+  }
   componentDidMount() {
     // console.log('in the component did mount method')
-    console.log("Number of todos: " + this.state.todos.length)
+    // console.log("Number of todos: " + this.state.todos.length)
     let data = window.localStorage.getItem('to');
     //unstring this data and set it to todo status
     // console.log(JSON.parse(data))
-    if(data) {
-    this.setState({
-      todos: JSON.parse(data)
-    })
-  }
+    if (data) {
+      this.setState({
+        todos: JSON.parse(data)
+      })
+    }
     // let savedTodo = window.localStorage.getItem('active')
     // console.log(savedTodo)
   }
 
   componentDidUpdate() {
     // console.log('in the component did update method')
-    console.log('Number of todos: ' + this.state.todos.length)
+    // console.log('Number of todos: ' + this.state.todos.length)
     // this.state.todos.map((item, index) => {
     //   window.localStorage.setItem(this.state.todos.index.name, this.state.todos.index.status)
 
@@ -79,20 +99,50 @@ class App extends React.Component {
     if (this.state.buttonClicked === "all") {
       tabChoice = (
         <List
-        placeholder = "What's next?"
-        currList = {this.state.todos}
-        addFunction = {this.addTodo}
-        updateTodo = {this.updateTodo}
-        title = "All"
+          placeholder="What's next?"
+          currList={this.state.todos}
+          addFunction={this.addTodo}
+          updateTodo={this.updateTodo}
+          title="All"
         />
       );
     }
 
-    return(
+    if (this.state.buttonClicked === "active") {
+      tabChoice = (
+        <div className="container">
+          <h3>Active</h3>
+          <ul>
+            {this.state.active.map((item, index) => (
+              <li key={index}>
+                {item.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    if (this.state.buttonClicked === "completed") {
+      tabChoice = (
+        <div className="container">
+          <h3>Completed</h3>
+          <ul>
+            {this.state.completed.map((item, index) => (
+              <li key={index}>
+                {item.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+    return (
       <div className="container">
         <div className="row justify-content-center">
           <div className="col">
-            <h3 className="d-flex flex-justify-center">To Do</h3>
+            <h1 className="d-flex flex-justify-center">To Do</h1>
+            <h4>Todos remaining: {this.state.todos.length}</h4>
           </div>
         </div>
 
