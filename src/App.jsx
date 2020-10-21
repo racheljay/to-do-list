@@ -13,10 +13,12 @@ class App extends React.Component {
       // active: []
     };
 
-
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.addTodo = this.addTodo.bind(this);
     this.updateTodo = this.updateTodo.bind(this);
+    // this.completeAll = this.completeAll.bind(this);
+    // this.activeAll = this.completeAll.bind(this);
+    // this.deleteCompleted = this.deleteCompleted.bind(this);
     // this.filterActive = this.filterActive.bind(this);
   }
 
@@ -42,7 +44,7 @@ class App extends React.Component {
     this.setState({
       todos: this.state.todos.concat(obj)
     })
-    console.log(this.state.todos)
+    // console.log(this.state.todos)
     // window.localStorage.setItem(this.state.todos[0].name, this.state.todos[0].status)
   }
 
@@ -52,11 +54,45 @@ class App extends React.Component {
     })
   }
 
+  cap(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  // completeAll() {
+  //   this.setState({
+  //     todos: this.state.todos.map((item, index) => {
+  //       item.status = "completed"
+  //     })
+
+  //   })
+  //   console.log(this.state.todos)
+  // }
+    
+  //     // console.log()
+  // //  })
+    
+  //   // console.log(update)
+  //   // console.log(this.state.todos)
+  
+
+  // activeAll() {
+  //   // let update = this.state.todos.map((item, index) => {
+  //   //   item.status = "active"
+  //   // })
+  //   console.log(this.state.todos)
+  // }
+
+  // deleteCompleted() {
+    
+  // }
+
+
+  
   // filterActive() {
   //   this.setState({
   //     active: this.state.todos.filter(item => item.status === "active")
   //   })
-    // console.log(this.state.active)
+  // console.log(this.state.active)
 
   //}
 
@@ -64,8 +100,8 @@ class App extends React.Component {
   //   this.setState({
   //     completed: this.state.todos.filter(item => item.status === "completed")
   //   })
-    // console.log(this.state.active)
- // }
+  // console.log(this.state.active)
+  // }
   componentDidMount() {
     // console.log('in the component did mount method')
     // console.log("Number of todos: " + this.state.todos.length)
@@ -153,6 +189,9 @@ class App extends React.Component {
     //     // </div>
     //   )
     // }
+
+
+
     return (
       <div className="container">
         <div className="row justify-content-center">
@@ -184,12 +223,15 @@ class App extends React.Component {
             </button>
           </div>
         </nav>
+       
         <List
+          cap={this.cap}
           placeholder="What's next?"
           currList={this.state.todos}
           addFunction={this.addTodo}
           updateTodo={this.updateTodo}
           tab={this.state.buttonClicked}
+          title={this.cap(this.state.buttonClicked)}
         />
       </div>
     )

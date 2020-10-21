@@ -10,6 +10,8 @@ class List extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        // this.completeAll = this.completeAll.bind(this);
+        
     }
 
     handleChange(e) {
@@ -22,10 +24,8 @@ class List extends React.Component {
             value: ""
         });
 
-
-
         e.preventDefault();
-        console.log(this.state.value)
+        // console.log(this.state.value)
         // console.log(this.currList)
         // window.localStorage.setItem(this.state.value, "active")
 
@@ -52,44 +52,44 @@ class List extends React.Component {
         // } else {
         //     double[index].status = "active"
         // }
-        // console.log(id)
-
         this.props.updateTodo(newarr)
-        // console.log(this.props.currList[index].status)
+    }
 
+    //WHY DOES THIS WORK IN LIST BUT NOT IN APP !#*@#&&@*
+    completeAll() {
+        let newarr = this.props.currList.map((item, index) => {
+            item.status = "completed"
+            return item
+        })
+        this.props.updateTodo(newarr)
+    }
 
-        // this.props.currList.map((item, index) => item.status) = "done" 
+    activeAll() {
+        let newarr = this.props.currList.map((item, index) => {
+            item.status = "active"
+            return item
+        })
+        this.props.updateTodo(newarr)
+    }
 
-        //console.log(this.props.currList.map((item, index) => item.status))
+    deleteCompleted() {
+        let newarr = this.props.currList.filter(item => {
+            if (item.status === "active") {
+                return item
+            }
+        })
+        this.props.updateTodo(newarr)
     }
 
     deleteItem(id) {
         // console.log(id)
         let newarr = this.props.currList.filter(item => {
-            if(item.id !== id) {
+            if (item.id !== id) {
                 return item
             }
-        } )
-    //    let double = this.props.currList.map((item, index) => {
-         //   
-    //             console.log(index)
-                
-          //  }
-    //         this.props.currList.splice(index, 1)
-    //     })
-        // let double = this .props.currList
-        // let newarr = double.map((item, index) => {
-        //     if(item.id === id) {
-        //         double.splice(double.indexOf(id), 1)
-        //         //  return item
-        //     }
-            
-        // })
-        console.log(newarr)
-        // // let double = this.props.currList
-        // // double.splice(indexOf(id), 1)
+        })
 
-         this.props.updateTodo(newarr)
+        this.props.updateTodo(newarr)
     }
 
 
@@ -97,7 +97,31 @@ class List extends React.Component {
         return (
 
             <div className="col-12 mx-auto">
+                 <nav className="d-flex flex-justify-center">
+          <div className="UnderlineNav-body pt-6">
+            <button
+              className="btn btn-primary"
+              onClick={() => this.completeAll()}
+            >
+              Complete All
+            </button>
+            <button
+              className="btn btn-success"
+              onClick={() => this.activeAll()}
+            >
+              Activate All
+            </button>
+            <button
+              className="btn btn-danger"
+              onClick={() => this.deleteCompleted()}
+            >
+              Clear Completed
+            </button>
+          </div>
+        </nav>
+        <br />
                 <p className="h2">{this.props.title}</p>
+
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         <input
@@ -110,10 +134,11 @@ class List extends React.Component {
                         <input className="btn btn-sm" type="submit" value="Submit" />
                     </label>
                 </form>
+                
 
 
                 <ul>
-                    {/* <div>{this.props.title}</div> */}
+                    <div>{this.props.title}</div>
                     {this.props.currList.filter((item) => {
                         // console.log(this.props.tab)
                         if (this.props.tab === "all") {
@@ -146,6 +171,7 @@ class List extends React.Component {
                         </li>
                     ))}
                 </ul>
+
             </div>
         )
     }
