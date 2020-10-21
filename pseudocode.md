@@ -4,7 +4,7 @@
         + 1. Dynamically Render the content with React using components
         + 2. Use Local Storage to store all to-do list data in the browser
         + 3. Display all to-do list items
-    4. Three "views" for the user: All, Completed, & To-Do (not completed)
+        + 4. Three "views" for the user: All, Completed, & To-Do (not completed)
         + 5. Display prompting text to add item
         + 6. Cross out or check off one item as "completed"
         + 7. See number of remaining items

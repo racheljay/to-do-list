@@ -5,7 +5,7 @@ class List extends React.Component {
         super(props);
         this.state = {
             value: "",
-    
+
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -17,34 +17,49 @@ class List extends React.Component {
     }
 
     handleSubmit(e) {
+        this.props.addFunction(this.state.value);
         this.setState({
             value: ""
         });
 
-        
-        this.props.addFunction(this.state.value);
+
+
         e.preventDefault();
         console.log(this.state.value)
         // console.log(this.currList)
         // window.localStorage.setItem(this.state.value, "active")
-        
+
     }
 
-    changeStatus(index) {
-        let double = this.props.currList
-        if(double[index].status === "active") {
-            double[index].status = "completed"
-            //console.log(index + " is active")
-        } else {
-            double[index].status = "active"
-        }
+    changeStatus(id) {
+        // let double = this.props.currList
 
-        this.props.updateTodo(double)
+        let newarr = this.props.currList.map((item, index) => {
+            if (item.id === id) {// && item.status === "active") {
+
+                if (item.status === "active") {
+                    item.status = "completed"
+
+                } else {
+                    item.status = "active"
+                }
+            }
+            return item
+        })
+        // if (double[index].status === "active") {
+        //     double[index].status = "completed"
+        //     //console.log(index + " is active")
+        // } else {
+        //     double[index].status = "active"
+        // }
+        console.log(id)
+
+        this.props.updateTodo(newarr)
         // console.log(this.props.currList[index].status)
-    
 
-            // this.props.currList.map((item, index) => item.status) = "done" 
-        
+
+        // this.props.currList.map((item, index) => item.status) = "done" 
+
         //console.log(this.props.currList.map((item, index) => item.status))
     }
 
@@ -59,7 +74,7 @@ class List extends React.Component {
 
     render() {
         return (
-            
+
             <div className="col-12 mx-auto">
                 <p className="h2">{this.props.title}</p>
                 <form onSubmit={this.handleSubmit}>
@@ -78,18 +93,32 @@ class List extends React.Component {
 
                 <ul>
                     {/* <div>{this.props.title}</div> */}
-                    {this.props.currList.map((item, index) => (
+                    {this.props.currList.filter((item) => {
+                        // console.log(this.props.tab)
+                        if (this.props.tab === "all") {
+                            // console.log("all", item)
+                            return item;
+                        }
+                        else if (this.props.tab === "active" && item.status === "active") {
+                            // console.log("active", item)
+                            return item;
+                        }
+                        else if (this.props.tab === "completed" && item.status === "completed") {
+                            // console.log("completed", item)
+                            return item;
+                        }
+                    }).map((item, index) => (
                         <li key={index}>
                             <button
-                            className="btn btn-dark btn-sm"
-                            onClick={() => this.changeStatus(index)}
+                                className="btn btn-dark btn-sm"
+                                onClick={() => this.changeStatus(item.id)}
                             >
                                 -
                             </button>
-                    {" "}{item.name}{" "}{"Status: "}{item.status}{" "}
+                            {" "}{item.name}{" "}{"Status: "}{item.status}{" "}
                             <button
-                            className="btn btn-danger btn-sm"
-                            onClick={() => this.deleteItem(index)}
+                                className="btn btn-danger btn-sm"
+                                onClick={() => this.deleteItem(item.id)}
                             >
                                 -
                             </button>

@@ -9,8 +9,8 @@ class App extends React.Component {
     this.state = {
       buttonClicked: "all",
       todos: [],
-      completed: [],
-      active: []
+      // completed: [],
+      // active: []
     };
 
 
@@ -24,13 +24,13 @@ class App extends React.Component {
     this.setState({
       buttonClicked: buttonName
     });
-    console.log(buttonName)
-    if (buttonName === 'active') {
-      this.filterActive()
-    }
-    if (buttonName === 'completed') {
-      this.filterComplete()
-    }
+    // console.log(buttonName)
+    // if (buttonName === 'active') {
+    //   this.filterActive()
+    // }
+    // if (buttonName === 'completed') {
+    //   this.filterComplete()
+    //}
 
   }
 
@@ -38,6 +38,7 @@ class App extends React.Component {
     let obj = {
       name: name,
       status: "active",
+      id: Date.now()
     }
     this.setState({
       todos: this.state.todos.concat(obj)
@@ -52,20 +53,20 @@ class App extends React.Component {
     })
   }
 
-  filterActive() {
-    this.setState({
-      active: this.state.todos.filter(item => item.status === "active")
-    })
-    console.log(this.state.active)
+  // filterActive() {
+  //   this.setState({
+  //     active: this.state.todos.filter(item => item.status === "active")
+  //   })
+    // console.log(this.state.active)
 
-  }
+  //}
 
-  filterComplete() {
-    this.setState({
-      completed: this.state.todos.filter(item => item.status === "completed")
-    })
-    console.log(this.state.active)
-  }
+  // filterComplete() {
+  //   this.setState({
+  //     completed: this.state.todos.filter(item => item.status === "completed")
+  //   })
+    // console.log(this.state.active)
+ // }
   componentDidMount() {
     // console.log('in the component did mount method')
     // console.log("Number of todos: " + this.state.todos.length)
@@ -94,49 +95,65 @@ class App extends React.Component {
 
   render() {
 
-    let tabChoice = <div />;
+    // let tabChoice = <div />;
 
-    if (this.state.buttonClicked === "all") {
-      tabChoice = (
-        <List
-          placeholder="What's next?"
-          currList={this.state.todos}
-          addFunction={this.addTodo}
-          updateTodo={this.updateTodo}
-          title="All"
-        />
-      );
-    }
+    // if (this.state.buttonClicked === "all") {
+    //   tabChoice = (
+    //     <List
+    //       placeholder="What's next?"
+    //       currList={this.state.todos}
+    //       addFunction={this.addTodo}
+    //       updateTodo={this.updateTodo}
+    //       title="All"
+    //     />
+    //   );
+    // }
 
-    if (this.state.buttonClicked === "active") {
-      tabChoice = (
-        <div className="container">
-          <h3>Active</h3>
-          <ul>
-            {this.state.active.map((item, index) => (
-              <li key={index}>
-                {item.name}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )
-    }
+    // if (this.state.buttonClicked === "active") {
+    //   tabChoice = (
 
-    if (this.state.buttonClicked === "completed") {
-      tabChoice = (
-        <div className="container">
-          <h3>Completed</h3>
-          <ul>
-            {this.state.completed.map((item, index) => (
-              <li key={index}>
-                {item.name}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )
-    }
+    //     <List
+    //       placeholder="What's next?"
+    //       currList={this.state.active}
+    //       addFunction={this.addTodo}
+    //       updateTodo={this.updateTodo}
+    //       title="Active"
+    //     />
+
+    //     // <div className="container">
+    //     //   <h3>Active</h3>
+    //     //   <ul>
+    //     //     {this.state.active.map((item, index) => (
+    //     //       <li key={index}>
+    //     //         {item.name}
+    //     //       </li>
+    //     //     ))}
+    //     //   </ul>
+    //     // </div>
+    //   )
+    // }
+
+    // if (this.state.buttonClicked === "completed") {
+    //   tabChoice = (
+    //     <List
+    //       placeholder="What's next?"
+    //       currList={this.state.todos}
+    //       addFunction={this.addTodo}
+    //       updateTodo={this.updateTodo}
+    //       title="Completed"
+    //     />
+    //     // <div className="container">
+    //     //   <h3>Completed</h3>
+    //     //   <ul>
+    //     //     {this.state.completed.map((item, index) => (
+    //     //       <li key={index}>
+    //     //         {item.name}
+    //     //       </li>
+    //     //     ))}
+    //     //   </ul>
+    //     // </div>
+    //   )
+    // }
     return (
       <div className="container">
         <div className="row justify-content-center">
@@ -168,7 +185,13 @@ class App extends React.Component {
             </button>
           </div>
         </nav>
-        {tabChoice}
+        <List
+          placeholder="What's next?"
+          currList={this.state.todos}
+          addFunction={this.addTodo}
+          updateTodo={this.updateTodo}
+          tab={this.state.buttonClicked}
+        />
       </div>
     )
   }
