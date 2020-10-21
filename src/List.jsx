@@ -52,7 +52,7 @@ class List extends React.Component {
         // } else {
         //     double[index].status = "active"
         // }
-        console.log(id)
+        // console.log(id)
 
         this.props.updateTodo(newarr)
         // console.log(this.props.currList[index].status)
@@ -63,12 +63,33 @@ class List extends React.Component {
         //console.log(this.props.currList.map((item, index) => item.status))
     }
 
-    deleteItem(index) {
-        console.log(this.props.currList)
-        let double = this.props.currList
-        double.splice(index, 1)
+    deleteItem(id) {
+        // console.log(id)
+        let newarr = this.props.currList.filter(item => {
+            if(item.id !== id) {
+                return item
+            }
+        } )
+    //    let double = this.props.currList.map((item, index) => {
+         //   
+    //             console.log(index)
+                
+          //  }
+    //         this.props.currList.splice(index, 1)
+    //     })
+        // let double = this .props.currList
+        // let newarr = double.map((item, index) => {
+        //     if(item.id === id) {
+        //         double.splice(double.indexOf(id), 1)
+        //         //  return item
+        //     }
+            
+        // })
+        console.log(newarr)
+        // // let double = this.props.currList
+        // // double.splice(indexOf(id), 1)
 
-        this.props.updateTodo(double)
+         this.props.updateTodo(newarr)
     }
 
 
