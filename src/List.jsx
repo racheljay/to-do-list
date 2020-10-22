@@ -10,7 +10,9 @@ class List extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        // this.completeAll = this.completeAll.bind(this);
+        this.completeAll = this.completeAll.bind(this);
+        this.deleteCompleted = this.deleteCompleted.bind(this);
+        this.activeAll = this.activeAll.bind(this);
         
     }
 
@@ -101,19 +103,19 @@ class List extends React.Component {
           <div className="UnderlineNav-body pt-6">
             <button
               className="btn btn-primary"
-              onClick={() => this.completeAll()}
+              onClick={this.completeAll}
             >
               Complete All
             </button>
             <button
               className="btn btn-success"
-              onClick={() => this.activeAll()}
+              onClick={this.activeAll}
             >
               Activate All
             </button>
             <button
               className="btn btn-danger"
-              onClick={() => this.deleteCompleted()}
+              onClick={this.deleteCompleted}
             >
               Clear Completed
             </button>

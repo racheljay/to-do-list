@@ -16,6 +16,7 @@ class App extends React.Component {
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.addTodo = this.addTodo.bind(this);
     this.updateTodo = this.updateTodo.bind(this);
+    this.activeAll = this.activeAll.bind(this);
     // this.completeAll = this.completeAll.bind(this);
     // this.activeAll = this.completeAll.bind(this);
     // this.deleteCompleted = this.deleteCompleted.bind(this);
@@ -68,19 +69,21 @@ class App extends React.Component {
   //   console.log(this.state.todos)
   // }
     
-  //     // console.log()
-  // //  })
+  //     console.log()
+  //  })
     
-  //   // console.log(update)
-  //   // console.log(this.state.todos)
+  //   console.log(update)
+  //   console.log(this.state.todos)
   
 
-  // activeAll() {
-  //   // let update = this.state.todos.map((item, index) => {
-  //   //   item.status = "active"
-  //   // })
-  //   console.log(this.state.todos)
-  // }
+  activeAll() {
+    let update = this.state.todos.map((item, index) => {
+      item.status = "active"
+      return item
+    })
+    console.log(this.state.todos)
+    this.updateTodo(update)
+  }
 
   // deleteCompleted() {
     
@@ -232,6 +235,7 @@ class App extends React.Component {
           updateTodo={this.updateTodo}
           tab={this.state.buttonClicked}
           title={this.cap(this.state.buttonClicked)}
+          active={this.activeAll}
         />
       </div>
     )
