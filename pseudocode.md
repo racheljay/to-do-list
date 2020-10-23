@@ -1,5 +1,18 @@
 ### To Do List
 
+## Reqirements:
+        + 1. Dynamically Render the content with React using components
+        + 2. Use Local Storage to store all to-do list data in the browser
+        + 3. Display all to-do list items
+        + 4. Three "views" for the user: All, Completed, & To-Do (not completed)
+        + 5. Display prompting text to add item
+        + 6. Cross out or check off one item as "completed"
+        + 7. See number of remaining items
+        + 8. Remove one item (soft delete / archive)
+        + 9. Check off or cross out all items in one click as a "completed all" funciton
+        + 10. Remove all completed items (soft delete / archive)
+        + 11. Ability to press a button and all checked off items become active again
+
 ## componenets
 - header
     -display title
@@ -38,5 +51,11 @@
             - shows all todos that have not been deleted
         - active
             - shows all todos with an active state
+                - filter todos
+                - if active: move to a new active array
+                - render this array todo when active is clicked
         - completed
             - shows all todos with an inactive state
+                -filter todos
+                - if completed: move to new completed array
+                - render this new array when completed is clicked
