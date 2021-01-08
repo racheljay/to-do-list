@@ -1,4 +1,7 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt, faCheck, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import {faCircle, faSquare} from '@fortawesome/free-regular-svg-icons'
 
 class List extends React.Component {
   constructor(props) {
@@ -27,7 +30,7 @@ class List extends React.Component {
     });
 
     e.preventDefault();
-    
+
   }
 
   changeStatus(id) {
@@ -38,9 +41,11 @@ class List extends React.Component {
 
         if (item.status === "active") {
           item.status = "completed"
+          item.checkbox = "checked"
 
         } else {
           item.status = "active"
+          item.checkbox = ""
         }
       }
       return item
@@ -92,13 +97,12 @@ class List extends React.Component {
   }
 
 
+
   render() {
     return (
 
       <div className="col-12 mx-auto">
-       
-        <br />
-        <p className="h2">{this.props.title}</p>
+
 
         <form onSubmit={this.handleSubmit}>
           <label>
@@ -109,14 +113,14 @@ class List extends React.Component {
               value={this.state.value}
               onChange={this.handleChange}
             />
-            <input className="btn btn-sm" type="submit" value="Submit" />
+            <input className="btn btn-outline-dark btn-sm" type="submit" value="Submit" />
           </label>
         </form>
 
 
 
-        <ul>
-          <div>{this.props.title}</div>
+        <ul className="list-group">
+          <h1>{this.props.title}</h1>
           {this.props.currList.filter((item) => {
             // console.log(this.props.tab)
             if (this.props.tab === "all") {
@@ -132,20 +136,26 @@ class List extends React.Component {
               return item;
             }
           }).map((item, index) => (
-            <li key={index}>
+            
+
+
+            <li key={index}
+            className={"list-group-item d-flex justify-content-between align-items-center list-group-item-" + (item.status === "active" ? 'dark' : 'light')}
+            >
               <button
-                className="btn btn-dark btn-sm"
+                className="btn btn-outline-dark btn-sm"
                 onClick={() => this.changeStatus(item.id)}
               >
-                -
-                            </button>
-              {" "}{item.name}{" "}{"Status: "}{item.status}{" "}
+                {item.status === "active" ? <FontAwesomeIcon icon={faSquare} /> : <FontAwesomeIcon icon={faCheck} />}
+                </button>
+                {/* <input type="checkbox" aria-label="Checkbox for following text input" onClick={() => this.changeStatus(item.id)} {item.checkbox}></input> */}
+              {item.name}
               <button
-                className="btn btn-danger btn-sm"
+                className="btn btn-outline-danger btn-sm"
                 onClick={() => this.deleteItem(item.id)}
               >
-                -
-                            </button>
+                <FontAwesomeIcon icon={faTrashAlt} />
+              </button>
             </li>
           ))}
         </ul>

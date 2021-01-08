@@ -1,7 +1,9 @@
 import React from 'react';
 import List from './List';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faClipboardList} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
+import {faCircle} from '@fortawesome/free-regular-svg-icons'
+
 // import './App.css';
 
 class App extends React.Component {
@@ -11,8 +13,7 @@ class App extends React.Component {
     this.state = {
       buttonClicked: "all",
       todos: [],
-      // completed: [],
-      // active: []
+
     };
 
     this.handleButtonClick = this.handleButtonClick.bind(this);
@@ -30,26 +31,19 @@ class App extends React.Component {
     this.setState({
       buttonClicked: buttonName
     });
-    // console.log(buttonName)
-    // if (buttonName === 'active') {
-    //   this.filterActive()
-    // }
-    // if (buttonName === 'completed') {
-    //   this.filterComplete()
-    //}
+
   }
 
   addTodo(name) {
     let obj = {
       name: name,
       status: "active",
-      id: Date.now()
+      id: Date.now(),
     }
     this.setState({
       todos: this.state.todos.concat(obj)
     })
-    // console.log(this.state.todos)
-    // window.localStorage.setItem(this.state.todos[0].name, this.state.todos[0].status)
+
   }
 
   updateTodo(arr) {
@@ -88,38 +82,6 @@ class App extends React.Component {
   }
 
 
-  // completeAll() {
-  //   this.setState({
-  //     todos: this.state.todos.map((item, index) => {
-  //       item.status = "completed"
-  //     })
-
-  //   })
-  //   console.log(this.state.todos)
-  // }
-
-  //     console.log()
-  //  })
-
-  //   console.log(update)
-  //   console.log(this.state.todos)
-
-//OLD VERSION OF ACTIVE ALL THAT I HAVE NO IDEA WHAT IT DOES
-  // activeAll() {
-  //   let update = this.state.todos.map((item, index) => {
-  //     item.status = "active"
-  //     return item
-  //   })
-  //   console.log(this.state.todos)
-  //   this.updateTodo(update)
-  // }
-
-  // deleteCompleted() {
-
-  // }
-
-
-
   // filterActive() {
   //   this.setState({
   //     active: this.state.todos.filter(item => item.status === "active")
@@ -146,7 +108,7 @@ class App extends React.Component {
       })
     }
     // let savedTodo = window.localStorage.getItem('active')
-    // console.log(savedTodo)
+    console.log(this.state.todos)
   }
 
   componentDidUpdate() {
@@ -164,65 +126,7 @@ class App extends React.Component {
 
   render() {
 
-    // let tabChoice = <div />;
 
-    // if (this.state.buttonClicked === "all") {
-    //   tabChoice = (
-    //     <List
-    //       placeholder="What's next?"
-    //       currList={this.state.todos}
-    //       addFunction={this.addTodo}
-    //       updateTodo={this.updateTodo}
-    //       title="All"
-    //     />
-    //   );
-    // }
-
-    // if (this.state.buttonClicked === "active") {
-    //   tabChoice = (
-
-    //     <List
-    //       placeholder="What's next?"
-    //       currList={this.state.active}
-    //       addFunction={this.addTodo}
-    //       updateTodo={this.updateTodo}
-    //       title="Active"
-    //     />
-
-    //     // <div className="container">
-    //     //   <h3>Active</h3>
-    //     //   <ul>
-    //     //     {this.state.active.map((item, index) => (
-    //     //       <li key={index}>
-    //     //         {item.name}
-    //     //       </li>
-    //     //     ))}
-    //     //   </ul>
-    //     // </div>
-    //   )
-    // }
-
-    // if (this.state.buttonClicked === "completed") {
-    //   tabChoice = (
-    //     <List
-    //       placeholder="What's next?"
-    //       currList={this.state.todos}
-    //       addFunction={this.addTodo}
-    //       updateTodo={this.updateTodo}
-    //       title="Completed"
-    //     />
-    //     // <div className="container">
-    //     //   <h3>Completed</h3>
-    //     //   <ul>
-    //     //     {this.state.completed.map((item, index) => (
-    //     //       <li key={index}>
-    //     //         {item.name}
-    //     //       </li>
-    //     //     ))}
-    //     //   </ul>
-    //     // </div>
-    //   )
-    // }
 
 
 
@@ -255,20 +159,20 @@ class App extends React.Component {
           <li className="nav-item dropdown">
             <a className="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
               <FontAwesomeIcon icon={faClipboardList} />
-              </a>
+            </a>
             <div className="dropdown-menu">
               <a className="dropdown-item text-info"
-              onClick={this.completeAll}
+                onClick={this.completeAll}
               >Complete All</a>
               <div className="dropdown-divider "></div>
               <a className="dropdown-item text-warning"
-              onClick={this.activeAll}
+                onClick={this.activeAll}
               >Activate All</a>
               <div className="dropdown-divider"></div>
               <a className="dropdown-item text-danger"
-              onClick={this.deleteCompleted}
+                onClick={this.deleteCompleted}
               >Remove Completed</a>
-              
+
             </div>
           </li>
 
@@ -284,7 +188,7 @@ class App extends React.Component {
           updateTodo={this.updateTodo}
           tab={this.state.buttonClicked}
           title={this.cap(this.state.buttonClicked)}
-          // active={this.activeAll}
+        // active={this.activeAll}
         />
       </div>
     )
