@@ -1,5 +1,7 @@
 import React from 'react';
 import List from './List';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faClipboardList} from '@fortawesome/free-solid-svg-icons';
 // import './App.css';
 
 class App extends React.Component {
@@ -16,10 +18,11 @@ class App extends React.Component {
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.addTodo = this.addTodo.bind(this);
     this.updateTodo = this.updateTodo.bind(this);
+
+    this.completeAll = this.completeAll.bind(this);
     this.activeAll = this.activeAll.bind(this);
-    // this.completeAll = this.completeAll.bind(this);
-    // this.activeAll = this.completeAll.bind(this);
-    // this.deleteCompleted = this.deleteCompleted.bind(this);
+    this.deleteCompleted = this.deleteCompleted.bind(this);
+
     // this.filterActive = this.filterActive.bind(this);
   }
 
@@ -59,6 +62,32 @@ class App extends React.Component {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  completeAll() {
+    let newarr = this.state.todos.map((item, index) => {
+      item.status = "completed"
+      return item
+    })
+    this.updateTodo(newarr)
+  }
+
+  activeAll() {
+    let newarr = this.state.todos.map((item, index) => {
+      item.status = "active"
+      return item
+    })
+    this.updateTodo(newarr)
+  }
+
+  deleteCompleted() {
+    let newarr = this.state.todos.filter(item => {
+      if (item.status === "active") {
+        return item
+      }
+    })
+    this.updateTodo(newarr)
+  }
+
+
   // completeAll() {
   //   this.setState({
   //     todos: this.state.todos.map((item, index) => {
@@ -68,29 +97,29 @@ class App extends React.Component {
   //   })
   //   console.log(this.state.todos)
   // }
-    
+
   //     console.log()
   //  })
-    
+
   //   console.log(update)
   //   console.log(this.state.todos)
-  
 
-  activeAll() {
-    let update = this.state.todos.map((item, index) => {
-      item.status = "active"
-      return item
-    })
-    console.log(this.state.todos)
-    this.updateTodo(update)
-  }
+//OLD VERSION OF ACTIVE ALL THAT I HAVE NO IDEA WHAT IT DOES
+  // activeAll() {
+  //   let update = this.state.todos.map((item, index) => {
+  //     item.status = "active"
+  //     return item
+  //   })
+  //   console.log(this.state.todos)
+  //   this.updateTodo(update)
+  // }
 
   // deleteCompleted() {
-    
+
   // }
 
 
-  
+
   // filterActive() {
   //   this.setState({
   //     active: this.state.todos.filter(item => item.status === "active")
@@ -129,6 +158,8 @@ class App extends React.Component {
     // })
     window.localStorage.setItem("to", JSON.stringify(this.state.todos))
   }
+
+
 
 
   render() {
@@ -204,29 +235,47 @@ class App extends React.Component {
           </div>
         </div>
 
-        <nav className="d-flex flex-justify-center">
-          <div className="UnderlineNav-body pt-6">
-            <button
-              className="btn btn-warning"
+        <ul className="nav nav-tabs">
+          <li className="nav-item">
+            <a className={"nav-link " + (this.state.buttonClicked === "all" ? 'active' : '')}
               onClick={() => this.handleButtonClick("all")}
-            >
-              All
-            </button>
-            <button
-              className="btn btn-warning"
+            >All</a>
+          </li>
+          <li className="nav-item">
+            <a className={"nav-link " + (this.state.buttonClicked === "active" ? 'active' : '')}
               onClick={() => this.handleButtonClick("active")}
-            >
-              Active
-            </button>
-            <button
-              className="btn btn-warning"
+            >Active</a>
+          </li>
+          <li className="nav-item">
+            <a className={"nav-link " + (this.state.buttonClicked === "completed" ? 'active' : '')}
               onClick={() => this.handleButtonClick("completed")}
-            >
-              Completed
-            </button>
-          </div>
-        </nav>
-       
+            >Completed</a>
+          </li>
+
+          <li className="nav-item dropdown">
+            <a className="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <FontAwesomeIcon icon={faClipboardList} />
+              </a>
+            <div className="dropdown-menu">
+              <a className="dropdown-item text-info"
+              onClick={this.completeAll}
+              >Complete All</a>
+              <div className="dropdown-divider "></div>
+              <a className="dropdown-item text-warning"
+              onClick={this.activeAll}
+              >Activate All</a>
+              <div className="dropdown-divider"></div>
+              <a className="dropdown-item text-danger"
+              onClick={this.deleteCompleted}
+              >Remove Completed</a>
+              
+            </div>
+          </li>
+
+        </ul>
+
+
+
         <List
           cap={this.cap}
           placeholder="What's next?"
@@ -235,7 +284,7 @@ class App extends React.Component {
           updateTodo={this.updateTodo}
           tab={this.state.buttonClicked}
           title={this.cap(this.state.buttonClicked)}
-          active={this.activeAll}
+          // active={this.activeAll}
         />
       </div>
     )
