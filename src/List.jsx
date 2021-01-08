@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faCheck, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import {faCircle, faSquare} from '@fortawesome/free-regular-svg-icons'
+import { faTrashAlt, faCheck, faCheckCircle, faFeatherAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCircle, faSquare } from '@fortawesome/free-regular-svg-icons'
 
 class List extends React.Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class List extends React.Component {
   }
 
   handleSubmit(e) {
-    this.props.addFunction(this.state.value);
+    this.state.value && this.props.addFunction(this.state.value);
     this.setState({
       value: ""
     });
@@ -34,7 +34,6 @@ class List extends React.Component {
   }
 
   changeStatus(id) {
-    // let double = this.props.currList
 
     let newarr = this.props.currList.map((item, index) => {
       if (item.id === id) {// && item.status === "active") {
@@ -50,16 +49,10 @@ class List extends React.Component {
       }
       return item
     })
-    // if (double[index].status === "active") {
-    //     double[index].status = "completed"
-    //     //console.log(index + " is active")
-    // } else {
-    //     double[index].status = "active"
-    // }
+
     this.props.updateTodo(newarr)
   }
 
-  //WHY DOES THIS WORK IN LIST BUT NOT IN APP !#*@#&&@*
   completeAll() {
     let newarr = this.props.currList.map((item, index) => {
       item.status = "completed"
@@ -96,59 +89,54 @@ class List extends React.Component {
     this.props.updateTodo(newarr)
   }
 
-
-
   render() {
     return (
 
       <div className="col-12 mx-auto">
 
+        <form onSubmit={this.handleSubmit} className="input-group mt-3">
 
-        <form onSubmit={this.handleSubmit}>
-          <label>
+
+          <div class="input-group-prepend">
+            <button class="btn btn-outline-info" type="submit"><FontAwesomeIcon icon={faFeatherAlt} /></button>
+          </div>
+  
             <input
-              className="form-control input-sm"
+              className="form-control"
               type="text"
               placeholder={this.props.placeholder}
               value={this.state.value}
               onChange={this.handleChange}
+              aria-label="" aria-describedby="basic-addon1"
             />
-            <input className="btn btn-outline-dark btn-sm" type="submit" value="Submit" />
-          </label>
+            
         </form>
 
-
-
         <ul className="list-group">
-          <h1>{this.props.title}</h1>
+          {/* <h1 className=" m-2">{this.props.title}</h1> */}
           {this.props.currList.filter((item) => {
-            // console.log(this.props.tab)
             if (this.props.tab === "all") {
-              // console.log("all", item)
               return item;
             }
             else if (this.props.tab === "active" && item.status === "active") {
-              // console.log("active", item)
               return item;
             }
             else if (this.props.tab === "completed" && item.status === "completed") {
-              // console.log("completed", item)
               return item;
             }
           }).map((item, index) => (
-            
+
 
 
             <li key={index}
-            className={"list-group-item d-flex justify-content-between align-items-center list-group-item-" + (item.status === "active" ? 'dark' : 'light')}
+              className={"list-group-item d-flex justify-content-between align-items-center list-group-item-" + (item.status === "active" ? 'dark' : 'light')}
             >
               <button
                 className="btn btn-outline-dark btn-sm"
                 onClick={() => this.changeStatus(item.id)}
               >
                 {item.status === "active" ? <FontAwesomeIcon icon={faSquare} /> : <FontAwesomeIcon icon={faCheck} />}
-                </button>
-                {/* <input type="checkbox" aria-label="Checkbox for following text input" onClick={() => this.changeStatus(item.id)} {item.checkbox}></input> */}
+              </button>
               {item.name}
               <button
                 className="btn btn-outline-danger btn-sm"
