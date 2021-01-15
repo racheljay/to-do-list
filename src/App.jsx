@@ -1,6 +1,10 @@
 import React from 'react';
 import List from './List';
-// import './App.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
+import {faCircle} from '@fortawesome/free-regular-svg-icons'
+
+import './App.css';
 
 class App extends React.Component {
   constructor(props) {
@@ -9,44 +13,36 @@ class App extends React.Component {
     this.state = {
       buttonClicked: "all",
       todos: [],
-      // completed: [],
-      // active: []
+
     };
 
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.addTodo = this.addTodo.bind(this);
     this.updateTodo = this.updateTodo.bind(this);
+
+    this.completeAll = this.completeAll.bind(this);
     this.activeAll = this.activeAll.bind(this);
-    // this.completeAll = this.completeAll.bind(this);
-    // this.activeAll = this.completeAll.bind(this);
-    // this.deleteCompleted = this.deleteCompleted.bind(this);
-    // this.filterActive = this.filterActive.bind(this);
+    this.deleteCompleted = this.deleteCompleted.bind(this);
+
   }
 
   handleButtonClick(buttonName) {
     this.setState({
       buttonClicked: buttonName
     });
-    // console.log(buttonName)
-    // if (buttonName === 'active') {
-    //   this.filterActive()
-    // }
-    // if (buttonName === 'completed') {
-    //   this.filterComplete()
-    //}
+
   }
 
   addTodo(name) {
     let obj = {
       name: name,
       status: "active",
-      id: Date.now()
+      id: Date.now(),
     }
     this.setState({
       todos: this.state.todos.concat(obj)
     })
-    // console.log(this.state.todos)
-    // window.localStorage.setItem(this.state.todos[0].name, this.state.todos[0].status)
+
   }
 
   updateTodo(arr) {
@@ -59,174 +55,95 @@ class App extends React.Component {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  // completeAll() {
-  //   this.setState({
-  //     todos: this.state.todos.map((item, index) => {
-  //       item.status = "completed"
-  //     })
-
-  //   })
-  //   console.log(this.state.todos)
-  // }
-    
-  //     console.log()
-  //  })
-    
-  //   console.log(update)
-  //   console.log(this.state.todos)
-  
+  completeAll() {
+    let newarr = this.state.todos.map((item, index) => {
+      item.status = "completed"
+      return item
+    })
+    this.updateTodo(newarr)
+  }
 
   activeAll() {
-    let update = this.state.todos.map((item, index) => {
+    let newarr = this.state.todos.map((item, index) => {
       item.status = "active"
       return item
     })
-    console.log(this.state.todos)
-    this.updateTodo(update)
+    this.updateTodo(newarr)
   }
 
-  // deleteCompleted() {
-    
-  // }
-
-
-  
-  // filterActive() {
-  //   this.setState({
-  //     active: this.state.todos.filter(item => item.status === "active")
-  //   })
-  // console.log(this.state.active)
-
-  //}
-
-  // filterComplete() {
-  //   this.setState({
-  //     completed: this.state.todos.filter(item => item.status === "completed")
-  //   })
-  // console.log(this.state.active)
-  // }
+  deleteCompleted() {
+    let newarr = this.state.todos.filter(item => {
+      if (item.status === "active") {
+        return item
+      }
+    })
+    this.updateTodo(newarr)
+  }
+ 
   componentDidMount() {
-    // console.log('in the component did mount method')
-    // console.log("Number of todos: " + this.state.todos.length)
+    
     let data = window.localStorage.getItem('to');
-    //unstring this data and set it to todo status
-    // console.log(JSON.parse(data))
+
     if (data) {
       this.setState({
         todos: JSON.parse(data)
       })
     }
-    // let savedTodo = window.localStorage.getItem('active')
-    // console.log(savedTodo)
+    console.log(this.state.todos)
   }
 
   componentDidUpdate() {
-    // console.log('in the component did update method')
-    // console.log('Number of todos: ' + this.state.todos.length)
-    // this.state.todos.map((item, index) => {
-    //   window.localStorage.setItem(this.state.todos.index.name, this.state.todos.index.status)
-
-    // })
+    
     window.localStorage.setItem("to", JSON.stringify(this.state.todos))
   }
 
-
   render() {
 
-    // let tabChoice = <div />;
-
-    // if (this.state.buttonClicked === "all") {
-    //   tabChoice = (
-    //     <List
-    //       placeholder="What's next?"
-    //       currList={this.state.todos}
-    //       addFunction={this.addTodo}
-    //       updateTodo={this.updateTodo}
-    //       title="All"
-    //     />
-    //   );
-    // }
-
-    // if (this.state.buttonClicked === "active") {
-    //   tabChoice = (
-
-    //     <List
-    //       placeholder="What's next?"
-    //       currList={this.state.active}
-    //       addFunction={this.addTodo}
-    //       updateTodo={this.updateTodo}
-    //       title="Active"
-    //     />
-
-    //     // <div className="container">
-    //     //   <h3>Active</h3>
-    //     //   <ul>
-    //     //     {this.state.active.map((item, index) => (
-    //     //       <li key={index}>
-    //     //         {item.name}
-    //     //       </li>
-    //     //     ))}
-    //     //   </ul>
-    //     // </div>
-    //   )
-    // }
-
-    // if (this.state.buttonClicked === "completed") {
-    //   tabChoice = (
-    //     <List
-    //       placeholder="What's next?"
-    //       currList={this.state.todos}
-    //       addFunction={this.addTodo}
-    //       updateTodo={this.updateTodo}
-    //       title="Completed"
-    //     />
-    //     // <div className="container">
-    //     //   <h3>Completed</h3>
-    //     //   <ul>
-    //     //     {this.state.completed.map((item, index) => (
-    //     //       <li key={index}>
-    //     //         {item.name}
-    //     //       </li>
-    //     //     ))}
-    //     //   </ul>
-    //     // </div>
-    //   )
-    // }
-
-
-
     return (
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col">
-            <h1 className="d-flex flex-justify-center">To Do</h1>
-            <h4>Todos remaining: {this.state.todos.length}</h4>
-          </div>
-        </div>
+      <div className="container App">
+        
+            <h1 className="text-center">To Do List</h1>
+            <h4 className="text-center">Items: {this.state.todos.length}</h4>
+     
 
-        <nav className="d-flex flex-justify-center">
-          <div className="UnderlineNav-body pt-6">
-            <button
-              className="btn btn-warning"
+        <ul className="nav nav-tabs ">
+          <li className="nav-item dropdown">
+            <a className="nav-link dropdown-toggle text-info" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <FontAwesomeIcon icon={faClipboardList} />
+            </a>
+            <div className="dropdown-menu">
+              <a className="dropdown-item text-info"
+                onClick={this.completeAll}
+              >Complete All</a>
+              <div className="dropdown-divider "></div>
+              <a className="dropdown-item text-warning"
+                onClick={this.activeAll}
+              >Activate All</a>
+              <div className="dropdown-divider"></div>
+              <a className="dropdown-item text-danger"
+                onClick={this.deleteCompleted}
+              >Remove Completed</a>
+
+            </div>
+          </li>
+          <li className="nav-item">
+            <a className={"nav-link " + (this.state.buttonClicked === "all" ? 'active' : '') + " text-info"}
               onClick={() => this.handleButtonClick("all")}
-            >
-              All
-            </button>
-            <button
-              className="btn btn-warning"
+            >All</a>
+          </li>
+          <li className="nav-item">
+            <a className={"nav-link " + (this.state.buttonClicked === "active" ? 'active' : '') + " text-info"}
               onClick={() => this.handleButtonClick("active")}
-            >
-              Active
-            </button>
-            <button
-              className="btn btn-warning"
+            >Active</a>
+          </li>
+          <li className="nav-item">
+            <a className={"nav-link " + (this.state.buttonClicked === "completed" ? 'active' : '') + " text-info"}
               onClick={() => this.handleButtonClick("completed")}
-            >
-              Completed
-            </button>
-          </div>
-        </nav>
-       
+            >Completed</a>
+          </li>
+
+        </ul>
+
         <List
           cap={this.cap}
           placeholder="What's next?"
@@ -235,7 +152,6 @@ class App extends React.Component {
           updateTodo={this.updateTodo}
           tab={this.state.buttonClicked}
           title={this.cap(this.state.buttonClicked)}
-          active={this.activeAll}
         />
       </div>
     )
