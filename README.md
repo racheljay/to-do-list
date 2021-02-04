@@ -1,68 +1,65 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# To Do List
 
-## Available Scripts
+First React project
 
-In the project directory, you can run:
+## Requirements:
+1. Dynamically Render the content with React using components
+2. Use Local Storage to store all to-do list data in the browser
+3. Display all to-do list items
+4. Three "views" for the user: All, Completed, & To-Do (not completed)
+5. Display prompting text to add item
+6. Cross out or check off one item as "completed"
+7. See number of remaining items
+8. Remove one item (soft delete / archive)
+9. Check off or cross out all items in one click as a "completed all" function
+10. Remove all completed items (soft delete / archive)
+11. Ability to press a button and all checked off items become active again
 
-### `npm start`
+# Pseudo Code:
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Components
+- header
+    - display title
+- input
+    - takes a todo
+    - adds todo to a storage var
+    - displays todo in list
+    - saves todo in local storage
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+ ## List
+- all
+    - display all todos
+    - if active, can click to make inactive (change style)
+    - in inactive, can click to make active
+- active
+    - display active todos
+        - active is the default state
+    - status btn: click to change state to inactive
+        - will then move to the completed list
+- completed
+    - display completed todos
+        - todos that have had their state changed to inactive
+    - status btn: click to change the state back to active
+        - will send todo back to active list
 
-### `npm test`
+- delete btn: will permanently delete todo
+    - available on all list items
+- onClick(toggle state)
+    - will switch between active and inactive
+    - will always show in all, but switch between active and completed displays
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## nav
+- display count of total todos
+- tabs
+    - all
+        - shows all todos that have not been deleted
+    - active
+        - shows all todos with an active state
+            - filter todos
+            - if active: move to a new active array
+            - render this array todo when active is clicked
+    - completed
+        - shows all todos with an inactive state
+            -filter todos
+            - if completed: move to new completed array
+            - render this new array when completed is clicked
